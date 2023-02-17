@@ -40,4 +40,20 @@ print(normalized_text_without_misspelling + '\n\n' + last_sentence_text.capitali
 # calculate number of whitespace character
 whitespace_characters = len(re.findall(r'\s', start_text))
 
-print('\n' + 'Number of whitespace characters: ', whitespace_characters)
+print('\n' + 'Number of whitespace characters #1: ', whitespace_characters)
+
+#************************************************************************
+count = 0
+for i in start_text:
+  if i == " ":
+       count = count + 1
+
+print("Number of spaces #2:", count)
+
+#************************************************************************
+spaces = 0
+for i in start_text:
+  if i.isspace():
+    spaces = spaces + 1
+
+print("Number of spaces #3: ", spaces)
