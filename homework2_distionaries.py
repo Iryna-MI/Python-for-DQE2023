@@ -14,8 +14,8 @@ import random
 # example: [{'a': 5, 'b': 7, 'g': 11}, {'a': 3, 'c': 35, 'g': 42}]
 
 dictList = []
-for el in range(random.randint(2, 10)): # random number of dictionaries
-    size = random.randint(2, 10)    # random dictionary size
+for el in range(random.randint(2, 4)): # random number of dictionaries
+    size = random.randint(2, 5)    # random dictionary size
     keys = random.sample(string.ascii_lowercase, size)  # random letters for dictionaries keys
     values = (random.randint(0, 100) for val in range(size)) # random numbers
     #The zip(fields, values) method returns an iterator that generates two-items tuples.
@@ -31,23 +31,24 @@ print("\nTask 1. List of random number of dictionaries: " + str(dictList))
 # if key is only in one dict - take it as is,
 # example: {'a_1': 5, 'b': 7, 'c': 35, 'g_2': 42}
 
-# initialize the final dictionary
-final_dict, tmp_dict= {},  {}
+# initialize the final and temp dictionary
+final_dict, tmp_dict = {},  {}
 
 #Transform from list of dicts into dict of lists.
-for dictionary in dictList:
-  for key, val in dictionary.items():
-      # returns the key value available in the dictionary
-      # and if given key is not available then it will return provided default value, value that was chosen
-      # add all found values for the chosen key
-      # setdefault returns the list
-    tmp_dict.setdefault(key, []).append(val)
+tmp_dict = {
+    k: [d.get(k) for d in dictList] # going through all elements in dictionary list and get values for current key k in current dictionary
+    for k in set().union(*dictList) # gets all keys from list of dictionary and unite them distinctly by using set().union to have distinct keys
+}
 
 #choose the biggest value
 for key, val in tmp_dict.items():
-    if len(val) > 1:
-        final_dict[key+"_"+str(val.index(max(val))+1)] = max(val) # max(val))+1 - to identify the # of dictionary with max value
-    else: final_dict[key] = val[0]
+    if int(len(val)) > 1:
+        max_val = max([i for i in val if i is not None])
+        ind_of_max_val = val.index(max([i for i in val if i is not None]))
+        final_dict[key+"_"+str(ind_of_max_val+1)] = max_val # max(val))+1 - to identify the # of dictionary with max value
+    else:
+        final_dict[key] = val[0]
 
 # print result
 print("\nTask2. Common dictionary:", final_dict)
+
