@@ -43,9 +43,12 @@ tmp_dict = {
 #choose the biggest value
 for key, val in tmp_dict.items():
     if int(len(val)) > 1:
-        max_val = max([i for i in val if i is not None])
-        ind_of_max_val = val.index(max([i for i in val if i is not None]))
-        final_dict[key+"_"+str(ind_of_max_val+1)] = max_val # max(val))+1 - to identify the # of dictionary with max value
+        non_none_value = [i for i in val if i is not None]
+        max_val = max(non_none_value)
+        ind_of_max_val = val.index(max_val)
+        if len(non_none_value) > 1:
+            final_dict[key+"_"+str(ind_of_max_val+1)] = max_val # max(val))+1 - to identify the # of dictionary with max value
+        else: final_dict[key] = max_val
     else:
         final_dict[key] = val[0]
 
