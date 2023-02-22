@@ -3,7 +3,8 @@
 import re
 
 # copy homework text to variable
-start_text = """tHis iz your homeWork, copy these Text to variable.
+start_text = """
+  tHis iz your homeWork, copy these Text to variable.
 
  
 
@@ -18,11 +19,19 @@ start_text = """tHis iz your homeWork, copy these Text to variable.
   last iz TO calculate nuMber OF Whitespace characteRS in this Tex. caREFULL, not only Spaces, but ALL whitespaces. I got 87."""
 
 # normalize text
-list_of_text = re.split(r'(^|[.]\s|\n\t)', start_text)
+list_of_text = re.split(r'(^|[.])', start_text)
 
 normalized_text = ''
 for i in list_of_text:
+    i = re.sub(r"^\s+", "", i) #Remove leading space
+    i = re.sub(r"\s+$", "", i) #Remove trailing spaces
+    i = re.sub(' +', ' ', i) #replace more than one whitespace with one whitespace
     normalized_text += i.capitalize()
+
+#(?<=[.]) search for dots 
+#(?=[^\s]) look that matches anything that isn't a space
+#add space and go to new line after each sentence
+normalized_text = re.sub(r'(?<=[.])(?=[^\s])', r'\n ', normalized_text)
 
 # replace misspelling in normalized text
 normalized_text_without_misspelling = normalized_text.replace(' iz ', ' is ')
@@ -33,27 +42,16 @@ sentences = [sentence for sentence in normalized_text_without_misspelling.split(
 last_sentence = []
 for sentence in sentences:
     last_sentence.append(sentence.split()[-1])
-last_sentence_text = ', '.join(last_sentence) + '.'
+last_sentence_text = ' '.join(last_sentence) + '.'
 
-print(normalized_text_without_misspelling + '\n\n' + last_sentence_text.capitalize())
+#add new sentence to the END OF this Paragraph.
+to_replace = 'add it to the end of this paragraph.'
+normalized_text_without_misspelling = normalized_text_without_misspelling.replace(to_replace, to_replace + '\n'+ last_sentence_text.capitalize())
+
+print("\n********* Normalized text ******************\n", normalized_text_without_misspelling)
 
 # calculate number of whitespace character
 whitespace_characters = len(re.findall(r'\s', start_text))
 
 print('\n' + 'Number of whitespace characters #1: ', whitespace_characters)
 
-#************************************************************************
-count = 0
-for i in start_text:
-  if i == " ":
-       count = count + 1
-
-print("Number of spaces #2:", count)
-
-#************************************************************************
-spaces = 0
-for i in start_text:
-  if i.isspace():
-    spaces = spaces + 1
-
-print("Number of spaces #3: ", spaces)
