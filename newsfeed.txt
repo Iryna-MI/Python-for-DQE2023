@@ -1,0 +1,20 @@
+News -------------------------
+New1
+New york, 06-03-2023 10:40
+------------------------------
+
+Weather Condition ------------
+Weather is snowy
+City: Lviv, Temperature: 0, How is the weather today?: it is snowing
+------------------------------
+
+News -------------------------
+Hot news!
+London, 06-03-2023 11:57
+------------------------------
+
+Private Ad -------------------
+I would like to buy a bike
+Actual until: 2023-05-21, 76 days left
+------------------------------
+
