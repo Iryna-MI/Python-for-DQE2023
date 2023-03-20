@@ -18,3 +18,94 @@ I would like to buy a bike
 Actual until: 2023-05-21, 76 days left
 ------------------------------
 
+News -------------------------
+Hottest news
+Dresden, 17-03-2023 18:31
+------------------------------
+
+Weather Condition ------------
+Spring is in the air
+City: Lviv, Temperature: 7, How is the weather today?: sunny
+------------------------------
+
+News -------------------------
+Hot news!
+Paris, 20-03-2023 19:15
+------------------------------
+
+Weather Condition ------------
+London
+City: London, Temperature: 15, How is the weather today?: sunny +15
+------------------------------
+
+News -------------------------
+News 20/03
+Lviv, 20-03-2023 19:29
+------------------------------
+
+News1 from file -------------------------
+News file1
+New york, 06-17-2023 10:40
+------------------------------
+
+Weather Condition from file ------------
+Weather is snowy
+City: Lviv, Temperature: 0, How is the weather today?: it is sunny
+------------------------------
+
+News2 from file -------------------------
+Hot news!
+London, 17-03-2023 11:57
+------------------------------
+
+Private Ad from file -------------------
+I would like to buy a bike
+Actual until: 2023-05-21
+------------------------------
+
+
+
+News1 from file -------------------------
+News file1
+New york, 06-17-2023 10:40
+------------------------------
+
+Weather Condition from file ------------
+Weather is snowy
+City: Lviv, Temperature: 0, How is the weather today?: it is sunny
+------------------------------
+
+News2 from file -------------------------
+Hot news!
+London, 17-03-2023 11:57
+------------------------------
+
+Private Ad from file -------------------
+I would like to buy a bike
+Actual until: 2023-05-21
+------------------------------
+
+
+
+News1 from file -------------------------
+News file1
+New york, 06-17-2023 10:40
+------------------------------
+
+Weather Condition from file ------------
+Weather is snowy
+City: Lviv, Temperature: 0, How is the weather today?: it is sunny
+------------------------------
+
+News2 from file -------------------------
+Hot news!
+London, 17-03-2023 11:57
+------------------------------
+
+Private Ad from file -------------------
+I would like to buy a bike
+Actual until: 2023-05-21
+------------------------------
+
+
+
