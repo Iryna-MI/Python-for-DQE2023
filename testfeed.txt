@@ -1,0 +1,20 @@
+News1 from file -------------------------
+News file1
+New york, 06-17-2023 10:40
+------------------------------
+
+Weather Condition from file ------------
+Weather is snowy
+City: Lviv, Temperature: 0, How is the weather today?: it is sunny
+------------------------------
+
+News2 from file -------------------------
+Hot news!
+London, 17-03-2023 11:57
+------------------------------
+
+Private Ad from file -------------------
+I would like to buy a bike
+Actual until: 2023-05-21
+------------------------------
+
