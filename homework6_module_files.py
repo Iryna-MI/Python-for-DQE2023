@@ -81,14 +81,14 @@ class WeatherCondition(NewsFeedTool):
 
 class TextProcessor:
     #os.getcwd() - current working directory
-    def __init__(self, file_to_process, default_folder=os.getcwd(), default_write_file='Newsfeed.txt'):
+    def __init__(self, file_folder, file_to_process, default_folder=os.getcwd(), default_write_file='Newsfeed.txt'):
+        self.file_folder = file_folder
         self.file_to_process = file_to_process
         self.default_folder = default_folder
         self.default_write_file = default_write_file
-        #self.file_to_process = input('Enter your file name to process like "Filename.txt": ')
 
     def __get_rows_from_file(self):
-        source_file_path = os.path(self.file_to_process)
+        source_file_path = os.path.join(self.file_folder, self.file_to_process)
         with open(source_file_path, 'r') as file:
             file_all_content = file.read()
         all_records = re.split('\n\n', file_all_content)
@@ -98,7 +98,13 @@ class TextProcessor:
         with open(self.default_write_file, 'a') as file:
             for row in self.__get_rows_from_file():
                 file.write(row + '\n\n')
-        os.remove(os.path(self.file_to_process))
+        # If file exists, delete it.
+        source_file_path = os.path.join(self.file_folder, self.file_to_process)
+        if os.path.isfile(source_file_path):
+            os.remove(source_file_path)
+        else:
+            # If it fails, inform the user.
+            print("Error: %s file not found" % source_file_path)
 
 
 def input_type_validation():
@@ -125,8 +131,9 @@ while True:
             WeatherCondition().write_to_file()
             print('Not implemented')
     elif input_type == 2:
-        user_file = input('Enter the full path to your file like C:\\ : ')
-        TextProcessor(file_to_process=user_file).write_from_file()
+        user_file_path = input('Enter the full path to your file like C:\\ : ')
+        file_name = input('Enter file name to process like "Name.txt": ')
+        TextProcessor(file_folder=user_file_path, file_to_process=file_name, ).write_from_file()
     elif input_type == 3:
         sys.exit()
     else:
