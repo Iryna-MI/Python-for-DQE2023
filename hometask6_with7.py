@@ -6,7 +6,7 @@
 # 4.Apply case normalization functionality form Homework 3/4
 
 from datetime import datetime
-import sys
+#import sys
 import re
 import os
 from homework4_functions import normalize_text
@@ -101,17 +101,34 @@ class TextProcessor:
         all_records = re.split('\n\n', file_all_content)
         return all_records
 
-    def write_from_file(self):
-        with open(self.default_write_file, 'a') as file:
-            for row in self.__get_rows_from_file():
-                file.write(row + '\n\n')
-        # If file exists, delete it.
+    def check_file(self):
         source_file_path = os.path.join(self.file_folder, self.file_to_process)
-        if os.path.isfile(source_file_path):
-            os.remove(source_file_path)
+        match = True
+        pattern = ['New', 'Ad', 'Weather']
+        with open(source_file_path, 'r') as file:
+            content = file.read()
+            # Iterate list to find each word
+            for word in pattern:
+                if word in content:
+                    match = True
+                else:
+                    match = False
+        return match
+
+    def write_from_file(self):
+        if self.check_file():
+            with open(self.default_write_file, 'a') as file:
+                for row in self.__get_rows_from_file():
+                    file.write(row + '\n\n')
         else:
-            # If it fails, inform the user.
-            print("Error: %s file not found" % source_file_path)
+            print("Correct file not found")
+            # If file exists, delete it.
+            source_file_path = os.path.join(self.file_folder, self.file_to_process)
+            if os.path.isfile(source_file_path):
+                os.remove(source_file_path)
+            else:
+                # If it fails, inform the user.
+                print("Error: %s file not found" % source_file_path)
 
 
 def input_type_validation():
@@ -144,7 +161,12 @@ while True:
     elif input_type == 2:
         user_file_path = input('Enter the full path to your file like C:\\ : ')
         file_name = input('Enter file name to process like "Name.txt": ')
-        TextProcessor(file_folder=user_file_path, file_to_process=file_name, ).write_from_file()
+        if user_file_path and file_name:
+            TextProcessor(file_folder=user_file_path, file_to_process=file_name, ).write_from_file()
+        if not user_file_path:
+            user_file_path = os.getcwd()
+            default_write_file ='testfeed.txt'
+            TextProcessor(file_folder=user_file_path, file_to_process=default_write_file, ).write_from_file()
     elif input_type == 3:
         sys.exit()
     else:
