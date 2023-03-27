@@ -1,0 +1,19 @@
+{
+  "newsfeed_1": {
+    "msg_type": "news",
+    "text": "Good news everywhere",
+    "city": "Lviv",
+    "publish_date": "23-03-2023 10:13"
+  },
+    "newsfeed_2": {
+    "msg_type": "privatead",
+    "text": "Selling bike",
+    "exp_date": "23-04-2023"
+  },
+    "newsfeed_3": {
+    "msg_type": "weather",
+    "weather_city": "Lviv",
+    "weather_condition": "sunny",
+    "temp": "+15"
+  }
+}
