@@ -144,9 +144,13 @@ class JsonProcessor(FileProcessor):
         for key, value in raw_json_data.items():
             json_data.update({key: value})
             counter -= 1
-            #raw_json_data.pop(key)
+            #delete processed rows
+            del raw_json_data[key]
             if counter == 0:
                 break
+        with open(source_file_path, 'w') as f:
+            f.write(json.dumps(raw_json_data, indent=2))
+
         return json_data
 
     def write_from_file(self):
@@ -175,7 +179,7 @@ class TextProcessor(FileProcessor):
             file_all_content = file.read()
         list_of_records = re.split('\n\n', file_all_content)
         # number of rows to process
-        return list_of_records[0:self.rows_to_process]
+        return list_of_records[0:]
 
     def check_file(self):
         source_file_path = os.path.join(self.file_folder, self.file_to_process)
@@ -192,19 +196,28 @@ class TextProcessor(FileProcessor):
         return match
 
     def write_from_file(self):
+        records = []
+        records = self.__get_rows_from_file()
         if self.check_file():
             with open(self.default_write_file, 'a') as file:
+                counter = self.rows_to_process
                 for row in self.__get_rows_from_file():
                     file.write(row + '\n\n')
+                    records.remove(row)
+                    counter -= 1
+                    if counter == 0:
+                        break
+            source_file_path = os.path.join(self.file_folder, self.file_to_process)
+            with open(source_file_path, 'w') as f:
+                for r in records:
+                    f.write(r)
         else:
             print("Correct file not found")
             # If file exists, delete it./delete row from file
             source_file_path = os.path.join(self.file_folder, self.file_to_process)
         #if os.path.isfile(source_file_path):
-            #os.remove(source_file_path)
-        #else:
-            ## If it fails, inform the user.
-            #print("Error: %s file not found" % source_file_path)
+        if os.stat(source_file_path).st_size == 0:
+            os.remove(source_file_path)
 
 
 def input_type_validation():
