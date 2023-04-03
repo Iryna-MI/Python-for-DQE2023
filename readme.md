@@ -1,8 +1,8 @@
  # tool, which allows user generated news feed:
 # 1.User is able to select what type of message she/he would like to add.
 # Possible ways to add new items:
-#- input
-#- provide records by file: txt, json, xml
+#input
+#provide records by file: txt, json, xml
 # 2.Records are published to the text file (newsfeed.txt) in special format.
 # 3.Input file will be removed if all records are successfully processed.
 # 4. There is a possibility to enter number of records to process (except xml:), xml - is fully processed
