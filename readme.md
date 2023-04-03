@@ -1,4 +1,4 @@
- # tool, which allows user generated news feed:
+ # Tool, which allows user generated news feed:
 # 1.User is able to select what type of message she/he would like to add.
 # Possible ways to add new items:
 #input
