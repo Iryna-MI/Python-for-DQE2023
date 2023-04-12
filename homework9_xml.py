@@ -296,24 +296,16 @@ while True:
                                   '2 - User folder\n'))
         user_file_path = input('Enter the full path to your file like C:\\ : ')
         file_name = input('Enter file name to process like "Name.format": ')
-        if user_file_path and file_name:
-            if file_type == 1:
-                TextProcessor(file_folder=user_file_path, file_to_process=file_name, ).write_from_file()
-            if file_type == 2:
-                JsonProcessor(file_folder=user_file_path, file_to_process=file_name, ).write_from_file()
-            else:
-                XmlProcessor(file_folder=user_file_path, file_to_process=file_name, ).write_from_file()
-        if not user_file_path:
-            #if no user file: use default folder and default txt file
-            user_file_path = os.getcwd()
-            default_write_file = 'testfeed.txt'
-            TextProcessor(file_folder=user_file_path, file_to_process=default_write_file, ).write_from_file()
-            #else:
-                #JsonProcessor(file_folder=user_file_path, file_to_process=default_write_file, ).write_from_file()
-        if not file_name:
-            user_file_path = os.getcwd()
-            default_write_file = 'testfeed.txt'
-            print('Default path and file is used!\n')
+        user_file_path = user_file_path or os.getcwd()
+        #if user_file_path and file_name:
+        if file_type == 1:
+            TextProcessor(file_folder=user_file_path, file_to_process=file_name or 'testfeed.txt', ).write_from_file()
+        elif file_type == 2:
+            JsonProcessor(file_folder=user_file_path, file_to_process=file_name or 'testfeed.json', ).write_from_file()
+        elif file_type == 3:
+                XmlProcessor(file_folder=user_file_path, file_to_process=file_name or 'testfeed.xml', ).write_from_file()
+        else:
+            print ("File type not supported")
         homework7_csv.CsvStatisticsCalculator('Newsfeed.txt').run_statistics()
     elif input_type == 3:
         sys.exit()
