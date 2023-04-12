@@ -1,0 +1,13 @@
+{
+  "newsfeed_1": {
+    "msg_type": "privatead",
+    "text": "Selling bike",
+    "exp_date": "23-04-2023"
+  },
+  "newsfeed_2": {
+    "msg_type": "weather",
+    "weather_city": "Lviv",
+    "weather_condition": "sunny",
+    "temp": "+15"
+  }
+}
