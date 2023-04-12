@@ -310,6 +310,10 @@ while True:
             TextProcessor(file_folder=user_file_path, file_to_process=default_write_file, ).write_from_file()
             #else:
                 #JsonProcessor(file_folder=user_file_path, file_to_process=default_write_file, ).write_from_file()
+        if not file_name:
+            user_file_path = os.getcwd()
+            default_write_file = 'testfeed.txt'
+            print('Default path and file is used!\n')
         homework7_csv.CsvStatisticsCalculator('Newsfeed.txt').run_statistics()
     elif input_type == 3:
         sys.exit()
