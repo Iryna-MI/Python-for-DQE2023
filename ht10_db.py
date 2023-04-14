@@ -19,11 +19,12 @@ class MyDB:
         self.database_url = database_url
         self.connection = sqlite3.connect(self.database_url)
         self.cursor = self.connection.cursor()
+        #self.cursor.execute("DROP TABLE tblNews;")
 
     def create_tables(self):
-        self.cursor.execute('''CREATE TABLE IF NOT EXISTS tblNews(news_id INTEGER PRIMARY KEY AUTOINCREMENT,Message VARCHAR(250), City VARCHAR(250), PublishDate DATETIME)''')
-        self.cursor.execute('CREATE TABLE IF NOT EXISTS tblPrivatead(ad_id INTEGER PRIMARY KEY AUTOINCREMENT, Message VARCHAR(250), ExpirationDate DATETIME, PublishDate DATE)')
-        self.cursor.execute('CREATE TABLE IF NOT EXISTS tblWeather(W_id INTEGER PRIMARY KEY AUTOINCREMENT, City VARCHAR(250), Weather_condition VARCHAR(250), Temperature INT)')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS tblNews(Message VARCHAR(250), City VARCHAR(250), PublishDate DATETIME)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS tblPrivatead(Message VARCHAR(250), ExpirationDate DATETIME, PublishDate DATE)''')
+        self.cursor.execute('''CREATE TABLE IF NOT EXISTS tblWeather(City VARCHAR(250), Weather_condition VARCHAR(250), Temperature INT)''')
 
     def insert_row(self, table_name, datadict):
         columns = [key for key in datadict.keys()]
@@ -33,17 +34,19 @@ class MyDB:
         self.cursor.execute(query)
         self.connection.commit()
 
-    #def check_no_duplicate (self, table_name, datadict):
+    def check_no_duplicate (self, table_name, datadict):
+        param = ' AND '.join([f"{key} = '{datadict[key]}'" for key in datadict.keys()])
+        query = f"SELECT COUNT(*) FROM {table_name} WHERE {param};"
+        self.cursor.execute(query)
+        return int(self.cursor.fetchone()[0]) > 0
 
     def process_into_db (self, table_name, datadict):
         self.create_tables()
-        self.insert_row(table_name, datadict)
-        print(f'Row was inserted into  {table_name} table into database.')
-        #if not self.check_no_duplicate(table_name, datadict):
-            #self.insert_row(table_name, datadict)
-            #print(f'Row was inserted into  {table_name} table into database.')
-        #else:
-            #print(f'DUPLICATE. Row was NOT inserted into database table {table_name}.')
+        if not self.check_no_duplicate(table_name, datadict):
+            self.insert_row(table_name, datadict)
+            print(f'Row was inserted into  {table_name} table into database.')
+        else:
+            print(f'DUPLICATE. Row was NOT inserted into database table {table_name}.')
 
 class NewsFeedTool:
     def __init__(self):
@@ -95,6 +98,7 @@ class News(NewsFeedTool):
         self.table_name = 'tblNews'
         self.table_content = {'Message': normalize_text(self.text), 'City': self.city.capitalize(),
                               'PublishDate': self.publish_date}
+        self.content_db = self.table_content
 
 
 class PrivateAd(NewsFeedTool):
@@ -118,13 +122,7 @@ class PrivateAd(NewsFeedTool):
                            'PublishDate': self.publish_date.strftime('%d-%m-%Y %H:%M')}
 
     def expiration_date_validation(self):
-        #exp_date = datetime.strptime(input("Please enter the expiration date (dd-mm-yyyy): "), '%d-%m-%Y')
-        try:
-            exp_date = datetime.strptime(input("Please enter the expiration date (dd-mm-yyyy): "), '%d-%m-%Y')
-            re.match("^([0-9]{2})-([0-9]{2})-([0-9]{4})$", exp_date)
-        except ValueError as err:
-            print("Error. Enter date in format dd-mm-yyyy")
-            exp_date = datetime.strptime(input("\nPlease enter the expiration date (dd-mm-yyyy): "), '%d-%m-%Y')
+        exp_date = datetime.strptime(input("Please enter the expiration date (dd-mm-yyyy): "), '%d-%m-%Y')
         while exp_date < self.publish_date:
             print("The expiration date can't be less than current date")
             exp_date = datetime.strptime(input("Enter the expiration date (dd-mm-yyyy): "), '%d-%m-%Y')
@@ -152,8 +150,8 @@ class WeatherCondition(NewsFeedTool):
                                      f'City: {self.weather_city}, ' \
                                      f'Temperature: {self.temp}, ' \
                                      f'How is the weather today?: {self.weather_condition}\n{self.footer}'
-            self.table_name = 'tblWeather'
-            self.content_db = {'City': normalize_text(self.weather_city),
+        self.table_name = 'tblWeather'
+        self.content_db = {'City': normalize_text(self.weather_city),
                                'Weather_condition': normalize_text(self.weather_condition),
                                'Temperature': self.temp}
 
